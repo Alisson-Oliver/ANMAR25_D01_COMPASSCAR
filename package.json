@@ -2,11 +2,12 @@
   "name": "compasscar-api",
   "version": "1.0.0",
   "description": "API for managing Compass Car vehicles. Allows for the registration, search, update and removal of cars, ensuring optimal fleet management.",
-  "main": "server.js",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "start": "node index.js",
+    "dev": "node --watch index.js"
   },
   "repository": {
     "type": "git",
