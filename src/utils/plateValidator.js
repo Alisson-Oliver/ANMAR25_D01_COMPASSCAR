@@ -1,8 +1,8 @@
 export default function plateValidator(plate) {
   const errors = [];
 
-  if (!plate) {
-    errors.push("The 'plate' field is required.");
+  if (!plate || typeof plate !== "string") {
+    errors.push("The 'plate' field is required and must be a string.");
     return errors;
   }
 
