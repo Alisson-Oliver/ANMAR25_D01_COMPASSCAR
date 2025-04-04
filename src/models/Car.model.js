@@ -27,14 +27,12 @@ const Car = sequelize.define(
       allowNull: false,
       unique: true,
     },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
   },
   {
     tableName: "cars",
-    timestamps: false,
+    timestamps: true,
+    updatedAt: false,
+    createdAt: "created_at",
   },
 );
 
