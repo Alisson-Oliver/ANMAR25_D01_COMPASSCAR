@@ -2,48 +2,52 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/Alisson-Oliver/ANMAR25_D01_COMPASSCAR/blob/main/LICENSE)
 
-## Descrição
+## 🇧🇷 Descrição (Português)
 
-A **CompassCar API** é uma solução backend destinada ao gerenciamento de locação de carros para a aplicação **Compass Car**. Ela permite realizar operações de **cadastro**, **busca**, **atualização** e **exclusão** de veículos. A API foi desenvolvida utilizando o framework **Express.js** junto com a plataforma **Node.js**. O armazenamento de dados é feito por meio do banco de dados relacional **MySQL**.
+A **CompassCar API** é uma solução backend destinada ao gerenciamento de locação de carros para a aplicação **Compass Car**. Ela permite realizar operações de **cadastro**, **busca**, **atualização** e **exclusão** de veículos. A API foi desenvolvida utilizando o framework **Express.js** com **Node.js** e utiliza o banco de dados **MySQL**.
 
-## Tecnologias Utilizadas
+## 🇺🇸 Description (English)
+
+The **CompassCar API** is a backend solution designed for managing car rentals in the **Compass Car** application. It enables operations such as **create**, **read**, **update**, and **delete** of vehicles. The API was developed using **Express.js** with **Node.js** and uses the **MySQL** relational database.
+
+## 🚀 Tecnologias | Technologies
 
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
 
-## Instruções de Instalação
+## 📦 Instalação | Installation
 
-### Pré-requisitos
+### 🇧🇷 Pré-requisitos
 
 - **Node.js** instalado
 - Gerenciador de pacotes (**npm** ou **yarn**)
-- Banco de Dados **MySQL** configurado no _host local_ ou em um _servidor_ (se você ainda não configurou o banco de dados, siga as instruções na seção **Configurando o Banco de Dados** logo abaixo)
+- Banco de dados **MySQL**
 
-## Configurando o Banco de Dados
+### 🇺🇸 Prerequisites
 
-Esta seção é destinada a quem ainda não tem o banco de dados configurado.
+- **Node.js** installed
+- Package manager (**npm** or **yarn**)
+- **MySQL** database setup
 
-#### 1. **Crie o Banco de Dados e as Tabelas**
+## 🛠️ Configurando o Banco de Dados | Setting up the Database
 
-Execute os seguintes comandos no **MySQL** para configurar o banco de dados **compasscar** e criar as tabelas necessárias:
+### 🇧🇷 Quando ainda não há banco criado:
+
+Execute os comandos abaixo no seu MySQL para criar o banco e tabelas:
 
 ```sql
--- Cria o banco de dados "compasscar", caso ainda não exista
 CREATE DATABASE IF NOT EXISTS compasscar;
 
--- Seleciona o banco de dados
 USE compasscar;
 
--- Criação da tabela de carros
 CREATE TABLE cars (
     id INT AUTO_INCREMENT PRIMARY KEY,
     brand VARCHAR(255) NOT NULL,
     model VARCHAR(255) NOT NULL,
-    plate VARCHAR(255) NOT NULL UNIQUE,
+    plate VARCHAR(8) NOT NULL UNIQUE,
     year INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Criação da tabela de itens de carros
 CREATE TABLE cars_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -53,58 +57,89 @@ CREATE TABLE cars_items (
 );
 ```
 
-#### 2. **Verifique a Conexão**
+### 🇺🇸 If you haven’t created the database yet:
 
-Depois de criar o banco de dados e executar o script SQL, a API deve ser capaz de se conectar ao banco de dados e funcionar corretamente.
+Run the SQL commands below in your MySQL instance:
 
-#### 3. **Observações Importantes:**
+```sql
+CREATE DATABASE IF NOT EXISTS compasscar;
 
-- Dependendo da hospedagem do banco de dados ou de configurações específicas, pode ser necessário ajustar a configuração do banco de dados.
+USE compasscar;
 
-## Passos para rodar a aplicação
+CREATE TABLE cars (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    brand VARCHAR(255) NOT NULL,
+    model VARCHAR(255) NOT NULL,
+    plate VARCHAR(8) NOT NULL UNIQUE,
+    year INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-1. **Clone o repositório:**
+CREATE TABLE cars_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    car_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (car_id) REFERENCES cars(id)
+);
+```
+
+## ⚙️ Variáveis de Ambiente | Environment Variables
+
+Crie um arquivo `.env` na raiz do projeto com os seguintes dados:
+
+```env
+DB_NAME=compasscar
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+DB_HOST=localhost
+SV_PORT=3000
+```
+
+> ✅ Ajuste os valores de acordo com o seu ambiente local.
+
+## ▶️ Executando o Projeto | Running the Project
+
+1. **Clone o repositório | Clone the repository:**
 
 ```bash
 git clone https://github.com/Alisson-Oliver/ANMAR25_D01_COMPASSCAR.git
 ```
 
-2. **Instale as dependências:**
+2. **Instale as dependências | Install dependencies:**
 
 ```bash
 cd ANMAR25_D01_COMPASSCAR
 npm install
 ```
 
-3. **Configure as variáveis de ambiente:**
-
-Crie um arquivo `.env` na raiz do projeto e adicione as seguintes configurações:
+3. **Configure o `.env` | Set up `.env` file:**
 
 ```bash
-DB_NAME= <nome-do-db>
-DB_USER= <usuário-do-db>
-DB_PASSWORD= <senha-do-db>
-DB_HOST= <host-do-db>
-SV_PORT= <porta-do-servidor>
+DB_NAME= <your-db-name>
+DB_USER= <your-db-user>
+DB_PASSWORD= <your-db-password>
+DB_HOST= <your-db-host>
+SV_PORT= <your-server-port>
 ```
 
-> **Observação:** Substitua os valores entre `< >` pelas configurações correspondentes do seu ambiente.
-
-4. **Inicie o servidor:**
+4. **Inicie o servidor | Start the server:**
 
 ```bash
 npm start
 ```
 
-5. **Pronto!** Agora a API está em funcionamento.
+1. ✅ A API estará rodando na porta definida! | The API will be running on the defined port!
 
-## Endpoints da API
+## 📡 Endpoints da API | API Endpoints
 
-(_A documentação completa dos endpoints será disponibilizada em breve._)
+_A documentação completa dos endpoints será disponibilizada em breve._  
+_Full endpoint documentation coming soon._
 
-## Contribuição
+## 🤝 Contribuição | Contribution
 
-#### Fluxo de Trabalho
+### Fluxo de Trabalho | Workflow
 
-1. Crie as **branches** seguindo o **Git Flow** para as alterações.
-2. Realize commits seguindo a convenção [**Conventional Commits**](https://www.conventionalcommits.org/).
+1. Crie as branches seguindo o padrão do Git Flow
+2. Faça suas alterações.
+3. Faça commit usando a convenção [Conventional Commits](https://www.conventionalcommits.org/):
