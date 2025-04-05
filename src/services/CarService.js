@@ -11,8 +11,41 @@ class CarService {
     return await CarRepository.createCar(carData);
   }
 
-  static async findAll() {
-    return await CarRepository.findAll();
+  static async findAll(query) {
+    let { year, final_plate, brand, page = 1, limit = 5 } = query;
+
+    page = parseInt(page);
+    if (isNaN(page) || page < 1) {
+      page = 1;
+    }
+
+    limit = parseInt(limit);
+
+    if (isNaN(limit) || limit < 1) {
+      limit = 5;
+    }
+    if (limit > 10) {
+      limit = 10;
+    }
+
+    const offset = (page - 1) * limit;
+
+    const result = await CarRepository.findAll({
+      year,
+      final_plate,
+      brand,
+      limit,
+      offset,
+    });
+
+    const total = result.count;
+    const pages = total === 0 ? 0 : Math.ceil(total / limit);
+
+    return {
+      count: total,
+      pages,
+      data: result.rows,
+    };
   }
 
   static async findCarById(id) {
