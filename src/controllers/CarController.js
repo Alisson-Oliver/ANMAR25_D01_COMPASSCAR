@@ -12,6 +12,15 @@ class CarController {
       return res.status(500).json({ error: error.message });
     }
   }
+
+  static async getAll(req, res) {
+    try {
+      const cars = await CarService.findAll();
+      return res.status(200).json({ data: cars });
+    } catch (error) {
+      return res.status(400).json(error.message);
+    }
+  }
 }
 
 export default CarController;
