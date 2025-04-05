@@ -1,5 +1,6 @@
 import Car from "../models/Car.model.js";
 import CarItem from "../models/CarItem.model.js";
+import { Op, fn, col, where } from "sequelize";
 
 class CarRepository {
   static async findByPlate(plate) {
@@ -20,8 +21,32 @@ class CarRepository {
     });
   }
 
-  static async findAll() {
-    return await Car.findAll();
+  static async findAll({ year, final_plate, brand, limit, offset }) {
+    const conditions = {};
+
+    if (year) {
+      conditions.year = { [Op.gte]: year };
+    }
+
+    if (brand) {
+      conditions.brand = { [Op.like]: `%${brand}%` };
+    }
+
+    if (final_plate) {
+      conditions[Op.and] = where(
+        fn("RIGHT", col("plate"), 1),
+        final_plate.toString(),
+      );
+    }
+
+    const result = await Car.findAndCountAll({
+      where: conditions,
+      limit,
+      offset,
+      order: [["id", "ASC"]],
+    });
+
+    return result;
   }
 }
 
