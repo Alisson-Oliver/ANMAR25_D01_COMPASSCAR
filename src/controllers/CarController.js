@@ -15,8 +15,8 @@ class CarController {
 
   static async getAll(req, res) {
     try {
-      const cars = await CarService.findAll();
-      return res.status(200).json({ data: cars });
+      const cars = await CarService.findAll(req.query);
+      return res.status(200).json(cars);
     } catch (error) {
       return res.status(400).json(error.message);
     }
