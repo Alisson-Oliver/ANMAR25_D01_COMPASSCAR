@@ -25,3 +25,31 @@ export const validateAddCar = (req, res, next) => {
 
   next();
 };
+
+export const validateItems = (req, res, next) => {
+  const items = req.body;
+
+  const errors = [];
+
+  if (!Array.isArray(items) || items.length === 0) {
+    errors.push("items is required");
+    return res.status(400).json({ errors });
+  }
+
+  if (items.length > 5) {
+    errors.push("items must be a maximum of 5");
+  }
+
+  const newItems = items.map((item) => item.toLowerCase());
+
+  const uniqueItems = new Set(newItems);
+  if (uniqueItems.size !== items.length) {
+    errors.push("items cannot be repeated");
+  }
+
+  if (errors.length > 0) {
+    return res.status(400).json({ errors });
+  }
+
+  next();
+};
