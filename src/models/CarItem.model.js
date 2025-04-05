@@ -20,7 +20,9 @@ const CarItem = sequelize.define(
   },
   {
     tableName: "cars_items",
-    timestamps: false,
+    timestamps: true,
+    updatedAt: false,
+    createdAt: "created_at",
   },
 );
 
