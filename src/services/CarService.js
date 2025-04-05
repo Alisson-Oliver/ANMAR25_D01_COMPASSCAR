@@ -10,6 +10,10 @@ class CarService {
 
     return await CarRepository.createCar(carData);
   }
+
+  static async findAll() {
+    return await CarRepository.findAll();
+  }
 }
 
 export default CarService;
