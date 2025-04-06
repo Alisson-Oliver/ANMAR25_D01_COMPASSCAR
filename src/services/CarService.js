@@ -66,6 +66,23 @@ class CarService {
     };
     return response;
   }
+
+  static async updateCar(idCar, carNewData) {
+    const existingCar = await CarRepository.findById(idCar);
+
+    if (!existingCar) {
+      throw new Error("car not found");
+    }
+
+    if (carNewData.plate) {
+      const existingPlate = await CarRepository.findByPlate(carNewData.plate);
+      if (existingPlate) {
+        throw new Error("car already registered");
+      }
+    }
+
+    await CarRepository.updateCar(idCar, carNewData);
+  }
 }
 
 export default CarService;
