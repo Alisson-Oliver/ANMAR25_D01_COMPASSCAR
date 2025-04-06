@@ -52,6 +52,10 @@ class CarRepository {
   static async updateCar(id, carNewData) {
     return await Car.update(carNewData, { where: { id } });
   }
+
+  static async deleteCar(id) {
+    return await Car.destroy({ where: { id } });
+  }
 }
 
 export default CarRepository;
