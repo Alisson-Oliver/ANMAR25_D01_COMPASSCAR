@@ -1,3 +1,4 @@
+import CarItemRepository from "../repositories/CarItemRepository.js";
 import CarRepository from "../repositories/CarRepository.js";
 
 class CarService {
@@ -82,6 +83,17 @@ class CarService {
     }
 
     await CarRepository.updateCar(idCar, carNewData);
+  }
+
+  static async deleteCar(idCar) {
+    const existingCar = await CarRepository.findById(idCar);
+
+    if (!existingCar) {
+      throw new Error("car not found");
+    }
+
+    await CarItemRepository.deleteByCarId(idCar);
+    await CarRepository.deleteCar(idCar);
   }
 }
 
