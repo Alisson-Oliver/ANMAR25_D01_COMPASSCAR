@@ -61,22 +61,37 @@ export const validateUpdateCar = (req, res, next) => {
   let yearErros = [];
   let plateErrors = [];
 
-  if (brand) {
-    if (!model) {
-      errors.push("model must also be informed");
+  if (brand !== undefined && brand.trim() === "") {
+    errors.push("brand is required");
+  }
+
+  if (model !== undefined && model.trim() === "") {
+    errors.push("model is required");
+  }
+
+  if (brand && !model) {
+    errors.push("model must also be informed");
+  }
+
+  if (year !== undefined) {
+    if (year === "") {
+      errors.push("year is required");
+    } else {
+      yearErros = yearValidator(year);
     }
   }
 
-  if (year) {
-    yearErros = yearValidator(year);
-  }
-
-  if (plate) {
-    plate = plate.toUpperCase();
-    plateErrors = plateValidator(plate);
+  if (plate !== undefined) {
+    if (plate === "") {
+      errors.push("plate is required");
+    } else {
+      plate = plate.toUpperCase();
+      plateErrors = plateValidator(plate);
+    }
   }
 
   errors = [...errors, ...yearErros, ...plateErrors];
+
   if (errors.length > 0) {
     return res.status(400).json({ errors });
   }
