@@ -48,6 +48,10 @@ class CarRepository {
 
     return result;
   }
+
+  static async updateCar(id, carNewData) {
+    return await Car.update(carNewData, { where: { id } });
+  }
 }
 
 export default CarRepository;
