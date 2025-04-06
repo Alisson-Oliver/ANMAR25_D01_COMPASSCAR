@@ -53,3 +53,33 @@ export const validateItems = (req, res, next) => {
 
   next();
 };
+
+export const validateUpdateCar = (req, res, next) => {
+  let { brand, model, year, plate } = req.body;
+
+  let errors = [];
+  let yearErros = [];
+  let plateErrors = [];
+
+  if (brand) {
+    if (!model) {
+      errors.push("model must also be informed");
+    }
+  }
+
+  if (year) {
+    yearErros = yearValidator(year);
+  }
+
+  if (plate) {
+    plate = plate.toUpperCase();
+    plateErrors = plateValidator(plate);
+  }
+
+  errors = [...errors, ...yearErros, ...plateErrors];
+  if (errors.length > 0) {
+    return res.status(400).json({ errors });
+  }
+
+  next();
+};
