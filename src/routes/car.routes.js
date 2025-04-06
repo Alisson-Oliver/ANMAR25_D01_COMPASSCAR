@@ -11,5 +11,6 @@ router.post("/cars", validateAddCar, CarController.create);
 router.get("/cars", CarController.getAll);
 router.get("/cars/:id", CarController.getById);
 router.patch("/cars/:id", validateUpdateCar, CarController.updateCar);
+router.delete("/cars/:id", CarController.deleteCar);
 
 export default router;
